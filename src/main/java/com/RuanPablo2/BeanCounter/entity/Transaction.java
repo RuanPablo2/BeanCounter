@@ -2,11 +2,7 @@ package com.RuanPablo2.BeanCounter.entity;
 
 import com.RuanPablo2.BeanCounter.entity.enums.TransactionType;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
@@ -14,8 +10,6 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "transactions")
-@Data
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class Transaction {
@@ -27,15 +21,11 @@ public class Transaction {
     @Column(nullable = false)
     private String description;
 
-    @NotNull(message = "Amount is required")
-    @Positive(message = "Amount must be positive")
     @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal amount;
 
-    @NotNull(message = "Date is required")
     private LocalDate date;
 
-    @NotNull(message = "Type is required")
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private TransactionType type;
@@ -43,4 +33,52 @@ public class Transaction {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public BigDecimal getAmount() {
+        return amount;
+    }
+
+    public void setAmount(BigDecimal amount) {
+        this.amount = amount;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+    public TransactionType getType() {
+        return type;
+    }
+
+    public void setType(TransactionType type) {
+        this.type = type;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 }

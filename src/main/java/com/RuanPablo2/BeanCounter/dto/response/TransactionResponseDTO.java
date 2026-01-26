@@ -2,10 +2,17 @@ package com.RuanPablo2.BeanCounter.dto.response;
 
 import com.RuanPablo2.BeanCounter.entity.Transaction;
 import com.RuanPablo2.BeanCounter.entity.enums.TransactionType;
+import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+@NoArgsConstructor
+@Getter
+@Setter
 public class TransactionResponseDTO {
 
     Long id;
@@ -13,8 +20,6 @@ public class TransactionResponseDTO {
     BigDecimal amount;
     LocalDate date;
     TransactionType type;
-
-    public TransactionResponseDTO(){}
 
     public TransactionResponseDTO(Transaction transaction) {
         this.id = transaction.getId();
