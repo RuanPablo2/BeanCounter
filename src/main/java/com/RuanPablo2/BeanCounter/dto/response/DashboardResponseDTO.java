@@ -21,4 +21,16 @@ public class DashboardResponseDTO {
         this.totalExpense = totalExpense;
         this.balance = balance;
     }
+
+    public BigDecimal getTotalIncome() {
+        return totalIncome;
+    }
+
+    public BigDecimal getTotalExpense() {
+        return totalExpense;
+    }
+
+    public BigDecimal getBalance() {
+        return balance;
+    }
 }
