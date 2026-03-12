@@ -30,7 +30,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                                     FilterChain filterChain) throws ServletException, IOException {
         String requestURI = request.getRequestURI();
 
-        // ADAPTAÇÃO: Liberar a rota /auth/ para login e cadastro
         if (requestURI.startsWith("/auth/")) {
             filterChain.doFilter(request, response);
             return;
