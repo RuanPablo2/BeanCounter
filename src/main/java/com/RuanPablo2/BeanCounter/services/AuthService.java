@@ -4,6 +4,7 @@ import com.RuanPablo2.BeanCounter.dto.request.LoginRequestDTO;
 import com.RuanPablo2.BeanCounter.dto.request.RegisterRequestDTO;
 import com.RuanPablo2.BeanCounter.dto.response.AuthResponseDTO;
 import com.RuanPablo2.BeanCounter.entity.User;
+import com.RuanPablo2.BeanCounter.exception.BusinessException;
 import com.RuanPablo2.BeanCounter.repository.UserRepository;
 import com.RuanPablo2.BeanCounter.security.CustomUserDetails;
 import com.RuanPablo2.BeanCounter.security.JwtUtil;
@@ -32,7 +33,7 @@ public class AuthService {
     public AuthResponseDTO register(RegisterRequestDTO request) {
 
         if (userRepository.findByEmail(request.getEmail()).isPresent()) {
-            throw new IllegalArgumentException("Email already in use");
+            throw new BusinessException("Email already in use", "AUTH_001");
         }
 
         User user = new User();

@@ -4,6 +4,7 @@ import com.RuanPablo2.BeanCounter.dto.request.TransactionRequestDTO;
 import com.RuanPablo2.BeanCounter.dto.response.TransactionResponseDTO;
 import com.RuanPablo2.BeanCounter.entity.Transaction;
 import com.RuanPablo2.BeanCounter.entity.User;
+import com.RuanPablo2.BeanCounter.exception.BusinessException;
 import com.RuanPablo2.BeanCounter.repository.TransactionRepository;
 import com.RuanPablo2.BeanCounter.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,7 +51,7 @@ public class TransactionService {
 
     public TransactionResponseDTO update(Long id, TransactionRequestDTO request, Long userId) {
         Transaction transaction = transactionRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Transaction not found"));
+                .orElseThrow(() -> new BusinessException("Transaction not found", "TRANS_001"));
 
         if (!transaction.getUser().getId().equals(userId)) {
             throw new SecurityException("You do not have permission to update this transaction");
@@ -67,7 +68,7 @@ public class TransactionService {
 
     public void delete(Long id, Long userId) {
         Transaction transaction = transactionRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Transaction not found"));
+                .orElseThrow(() -> new BusinessException("Transaction not found", "TRANS_001"));
 
         if (!transaction.getUser().getId().equals(userId)) {
             throw new SecurityException("You do not have permission to delete this transaction");
