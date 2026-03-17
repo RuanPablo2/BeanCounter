@@ -21,9 +21,10 @@ public class TransactionService {
     @Autowired
     private UserRepository userRepository;
 
-    public TransactionResponseDTO create(TransactionRequestDTO request) {
-        User user = userRepository.findById(request.getUserId())
-                .orElseThrow(() -> new IllegalArgumentException("User ID not found"));
+    public TransactionResponseDTO create(TransactionRequestDTO request, Long userId) {
+
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("User not found"));
 
         Transaction transaction = new Transaction();
         transaction.setDescription(request.getDescription());
@@ -47,9 +48,13 @@ public class TransactionService {
                 .toList();
     }
 
-    public TransactionResponseDTO update(Long id, TransactionRequestDTO request) {
+    public TransactionResponseDTO update(Long id, TransactionRequestDTO request, Long userId) {
         Transaction transaction = transactionRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Transaction not found with ID: " + id));
+                .orElseThrow(() -> new IllegalArgumentException("Transaction not found"));
+
+        if (!transaction.getUser().getId().equals(userId)) {
+            throw new SecurityException("You do not have permission to update this transaction");
+        }
 
         transaction.setDescription(request.getDescription());
         transaction.setAmount(request.getAmount());
@@ -57,14 +62,17 @@ public class TransactionService {
         transaction.setType(request.getType());
 
         transactionRepository.save(transaction);
-
         return new TransactionResponseDTO(transaction);
     }
 
-    public void delete(Long id) {
-        if (!transactionRepository.existsById(id)) {
-            throw new IllegalArgumentException("Transaction not found with ID: " + id);
+    public void delete(Long id, Long userId) {
+        Transaction transaction = transactionRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Transaction not found"));
+
+        if (!transaction.getUser().getId().equals(userId)) {
+            throw new SecurityException("You do not have permission to delete this transaction");
         }
-        transactionRepository.deleteById(id);
+
+        transactionRepository.delete(transaction);
     }
 }

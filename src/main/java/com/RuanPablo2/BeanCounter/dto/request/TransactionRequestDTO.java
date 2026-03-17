@@ -5,13 +5,11 @@ import com.RuanPablo2.BeanCounter.entity.enums.TransactionType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
-import lombok.NoArgsConstructor;
 import org.springframework.beans.BeanUtils;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-@NoArgsConstructor
 public class TransactionRequestDTO {
 
     @NotBlank(message = "Description is required")
@@ -27,8 +25,8 @@ public class TransactionRequestDTO {
     @NotNull(message = "Type is required")
     TransactionType type;
 
-    @NotNull(message = "User ID is required")
-    Long userId;
+    public TransactionRequestDTO() {
+    }
 
     public TransactionRequestDTO(Transaction entity) {
         BeanUtils.copyProperties(entity, this);
@@ -64,13 +62,5 @@ public class TransactionRequestDTO {
 
     public void setType(@NotNull(message = "Type is required") TransactionType type) {
         this.type = type;
-    }
-
-    public @NotNull(message = "User ID is required") Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(@NotNull(message = "User ID is required") Long userId) {
-        this.userId = userId;
     }
 }

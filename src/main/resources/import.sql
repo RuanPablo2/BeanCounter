@@ -1,6 +1,6 @@
 -- USERS
-INSERT INTO users (name, email, password, created_at) VALUES ('Ruan Developer', 'ruan@dev.com', '123456', CURRENT_TIMESTAMP);
-INSERT INTO users (name, email, password, created_at) VALUES ('Usuario Teste', 'teste@email.com', '123456', CURRENT_TIMESTAMP);
+INSERT INTO users (name, email, password, created_at) VALUES ('Ruan Developer', 'ruan@dev.com', '$2a$10$W7YMyzA/rkHo61lr6u0r8eal8QEsGdm5HC/9jNoOD3qi/20pEjItS', CURRENT_TIMESTAMP);
+INSERT INTO users (name, email, password, created_at) VALUES ('Usuario Teste', 'teste@email.com', '$2a$10$W7YMyzA/rkHo61lr6u0r8eal8QEsGdm5HC/9jNoOD3qi/20pEjItS', CURRENT_TIMESTAMP);
 
 -- INCOME
 INSERT INTO transactions (description, amount, date, type, user_id) VALUES ('Salário Mensal', 5000.00, '2025-01-05', 'INCOME', 1);
