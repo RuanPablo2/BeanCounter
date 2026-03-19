@@ -25,7 +25,7 @@ public class TransactionService {
     public TransactionResponseDTO create(TransactionRequestDTO request, Long userId) {
 
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+                .orElseThrow(() -> new BusinessException("User not found", "USER_001"));
 
         Transaction transaction = new Transaction();
         transaction.setDescription(request.getDescription());
@@ -38,9 +38,7 @@ public class TransactionService {
         return new TransactionResponseDTO(transaction);
     }
 
-    public List<TransactionResponseDTO> listByMonth(Long userId, int month, int year) {
-        LocalDate startDate = LocalDate.of(year, month, 1);
-        LocalDate endDate = startDate.withDayOfMonth(startDate.lengthOfMonth());
+    public List<TransactionResponseDTO> listByDateRange(Long userId, LocalDate startDate, LocalDate endDate) {
 
         List<Transaction> transactions = transactionRepository.findByUserIdAndDateBetween(userId, startDate, endDate);
 

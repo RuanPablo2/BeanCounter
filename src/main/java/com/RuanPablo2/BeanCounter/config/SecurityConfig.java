@@ -1,5 +1,6 @@
-package com.RuanPablo2.BeanCounter.security;
+package com.RuanPablo2.BeanCounter.config;
 
+import com.RuanPablo2.BeanCounter.security.JwtAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;

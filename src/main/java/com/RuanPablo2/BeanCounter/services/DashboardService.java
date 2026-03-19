@@ -15,9 +15,7 @@ public class DashboardService {
     @Autowired
     private TransactionRepository transactionRepository;
 
-    public DashboardResponseDTO getMonthlySummary(Long userId, int month, int year) {
-        LocalDate startDate = LocalDate.of(year, month, 1);
-        LocalDate endDate = startDate.withDayOfMonth(startDate.lengthOfMonth());
+    public DashboardResponseDTO getSummaryByDateRange(Long userId, LocalDate startDate, LocalDate endDate) {
 
         BigDecimal totalIncome = transactionRepository.sumByUserIdAndTypeAndDateBetween(
                 userId, TransactionType.INCOME, startDate, endDate
@@ -26,6 +24,10 @@ public class DashboardService {
         BigDecimal totalExpense = transactionRepository.sumByUserIdAndTypeAndDateBetween(
                 userId, TransactionType.EXPENSE, startDate, endDate
         );
+
+        // If the SUM value from the bank is null (zero transactions), it is set to zero
+        if (totalIncome == null) totalIncome = BigDecimal.ZERO;
+        if (totalExpense == null) totalExpense = BigDecimal.ZERO;
 
         BigDecimal balance = totalIncome.subtract(totalExpense);
 

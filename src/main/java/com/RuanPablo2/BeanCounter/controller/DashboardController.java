@@ -4,6 +4,7 @@ import com.RuanPablo2.BeanCounter.dto.response.DashboardResponseDTO;
 import com.RuanPablo2.BeanCounter.security.CustomUserDetails;
 import com.RuanPablo2.BeanCounter.services.DashboardService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,20 +21,20 @@ public class DashboardController {
     @Autowired
     private DashboardService dashboardService;
 
-    // GET /dashboard?month=1&year=2025
     @GetMapping
     public ResponseEntity<DashboardResponseDTO> getDashboard(
             @AuthenticationPrincipal CustomUserDetails userDetails,
-            @RequestParam(required = false) Integer month,
-            @RequestParam(required = false) Integer year
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate
     ) {
-        // If the request does not include the month and year, we use the current date.
-        if (month == null) month = LocalDate.now().getMonthValue();
-        if (year == null) year = LocalDate.now().getYear();
+        // Fallback: If no dates are specified, it will take the period from the 1st to the last day of the current month
+        if (startDate == null || endDate == null) {
+            LocalDate today = LocalDate.now();
+            startDate = today.withDayOfMonth(1);
+            endDate = today.withDayOfMonth(today.lengthOfMonth());
+        }
 
-        Long userId = userDetails.getId();
-
-        DashboardResponseDTO response = dashboardService.getMonthlySummary(userId, month, year);
+        DashboardResponseDTO response = dashboardService.getSummaryByDateRange(userDetails.getId(), startDate, endDate);
         return ResponseEntity.ok(response);
     }
 }
