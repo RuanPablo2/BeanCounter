@@ -27,6 +27,7 @@ services:
       - DB_PASSWORD=${DB_PASSWORD}
       - JWT_SECRET=${JWT_SECRET}
       - JWT_EXPIRATION=86400000 # 24 horas em milissegundos
+      - CORS_ORIGINS=https://beancounter-ui.netlify.app
     depends_on:
       - beancounter-db
     networks:
