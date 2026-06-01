@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  beancounter-db:
+    image: postgres:15-alpine
+    container_name: beancounter-db
+    restart: always
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: beancounter_db
+    volumes:
+      - beancounter_pgdata:/var/lib/postgresql/data
+    networks:
+      - beancounter-network
+
+  beancounter-api:
+    build: .
+    container_name: beancounter-api
+    restart: always
+    ports:
+      - "8082:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - DB_URL=jdbc:postgresql://beancounter-db:5432/beancounter_db
+      - DB_USERNAME=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - JWT_SECRET=${JWT_SECRET}
+      - JWT_EXPIRATION=86400000 # 24 horas em milissegundos
+    depends_on:
+      - beancounter-db
+    networks:
+      - beancounter-network
+
+networks:
+  beancounter-network:
+    driver: bridge
+
+volumes:
+  beancounter_pgdata:
