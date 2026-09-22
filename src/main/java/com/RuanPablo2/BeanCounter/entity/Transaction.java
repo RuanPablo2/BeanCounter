@@ -34,6 +34,8 @@ public class Transaction {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
+    private String category;
+
     public Long getId() {
         return id;
     }
@@ -80,5 +82,13 @@ public class Transaction {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 }

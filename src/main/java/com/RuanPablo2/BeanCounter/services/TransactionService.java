@@ -33,6 +33,7 @@ public class TransactionService {
         transaction.setDate(request.getDate());
         transaction.setType(request.getType());
         transaction.setUser(user);
+        transaction.setCategory(request.getCategory());
 
         transactionRepository.save(transaction);
         return new TransactionResponseDTO(transaction);
@@ -59,6 +60,7 @@ public class TransactionService {
         transaction.setAmount(request.getAmount());
         transaction.setDate(request.getDate());
         transaction.setType(request.getType());
+        transaction.setCategory(request.getCategory());
 
         transactionRepository.save(transaction);
         return new TransactionResponseDTO(transaction);

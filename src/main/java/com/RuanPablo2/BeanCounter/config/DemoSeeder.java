@@ -50,26 +50,27 @@ public class DemoSeeder implements CommandLineRunner {
         int month = LocalDate.now().getMonthValue();
 
         List<Transaction> demoTransactions = List.of(
-                createTransaction(demoUser, "Salário Mensal - Desenvolvedor", 4800.00, LocalDate.of(year, month, 5), TransactionType.INCOME),
-                createTransaction(demoUser, "Freelance - Landing Page Angular", 1250.00, LocalDate.of(year, month, 12), TransactionType.INCOME),
-                createTransaction(demoUser, "Aluguel do Apartamento", 1800.00, LocalDate.of(year, month, 6), TransactionType.EXPENSE),
-                createTransaction(demoUser, "Conta de Luz", 148.63, LocalDate.of(year, month, 1), TransactionType.EXPENSE),
-                createTransaction(demoUser, "Compras do Mês - Carrefour", 654.30, LocalDate.of(year, month, 11), TransactionType.EXPENSE),
-                createTransaction(demoUser, "Internet", 125.99, LocalDate.of(year, month, 8), TransactionType.EXPENSE),
-                createTransaction(demoUser, "Dividendos fundos imobiliários", 800.00, LocalDate.of(year, month, 1), TransactionType.INCOME)
+                createTransaction(demoUser, "Salário Mensal - Desenvolvedor", 4800.00, LocalDate.of(year, month, 5), TransactionType.INCOME, "Salário"),
+                createTransaction(demoUser, "Freelance - Landing Page Angular", 1250.00, LocalDate.of(year, month, 12), TransactionType.INCOME, "Freelance"),
+                createTransaction(demoUser, "Aluguel do Apartamento", 1800.00, LocalDate.of(year, month, 6), TransactionType.EXPENSE, "Moradia"),
+                createTransaction(demoUser, "Conta de Luz", 148.63, LocalDate.of(year, month, 1), TransactionType.EXPENSE, "Contas Básicas"),
+                createTransaction(demoUser, "Compras do Mês - Carrefour", 654.30, LocalDate.of(year, month, 11), TransactionType.EXPENSE, "Alimentação"),
+                createTransaction(demoUser, "Internet", 125.99, LocalDate.of(year, month, 8), TransactionType.EXPENSE, "Internet"),
+                createTransaction(demoUser, "Dividendos fundos imobiliários", 800.00, LocalDate.of(year, month, 1), TransactionType.INCOME, "Investimentos")
         );
 
         transactionRepository.saveAll(demoTransactions);
         System.out.println("✅ [DemoSeeder] Dados de demonstração injetados com sucesso (Total: 7 transações)!");
     }
 
-    private Transaction createTransaction(User user, String description, double amount, LocalDate date, TransactionType type) {
+    private Transaction createTransaction(User user, String description, double amount, LocalDate date, TransactionType type, String category) {
         Transaction t = new Transaction();
         t.setUser(user);
         t.setDescription(description);
         t.setAmount(BigDecimal.valueOf(amount));
         t.setDate(date);
         t.setType(type);
+        t.setCategory(category);
         return t;
     }
 }

@@ -17,6 +17,7 @@ public class TransactionResponseDTO {
     BigDecimal amount;
     LocalDate date;
     TransactionType type;
+    private String category;
 
     public TransactionResponseDTO() {
     }
@@ -27,6 +28,7 @@ public class TransactionResponseDTO {
         this.amount = transaction.getAmount();
         this.date = transaction.getDate();
         this.type = transaction.getType();
+        this.category = transaction.getCategory();
     }
 
     public Long getId() {
@@ -67,5 +69,13 @@ public class TransactionResponseDTO {
 
     public void setType(TransactionType type) {
         this.type = type;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 }

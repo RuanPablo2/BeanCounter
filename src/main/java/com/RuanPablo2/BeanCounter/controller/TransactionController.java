@@ -3,6 +3,7 @@ package com.RuanPablo2.BeanCounter.controller;
 import com.RuanPablo2.BeanCounter.dto.request.TransactionRequestDTO;
 import com.RuanPablo2.BeanCounter.dto.response.TransactionResponseDTO;
 import com.RuanPablo2.BeanCounter.security.CustomUserDetails;
+import com.RuanPablo2.BeanCounter.services.SmartTransactionService;
 import com.RuanPablo2.BeanCounter.services.TransactionService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/transactions")
@@ -21,6 +23,9 @@ public class TransactionController {
 
     @Autowired
     private TransactionService transactionService;
+
+    @Autowired
+    private SmartTransactionService smartTransactionService;
 
     @PostMapping
     public ResponseEntity<TransactionResponseDTO> create(
@@ -65,5 +70,15 @@ public class TransactionController {
 
         transactionService.delete(id, userDetails.getId());
         return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/smart")
+    public ResponseEntity<SmartTransactionService.SmartTransactionResponse> createSmartTransaction(
+            @AuthenticationPrincipal CustomUserDetails userDetails,
+            @RequestBody Map<String, String> payload) {
+
+        String rawText = payload.get("text");
+        var response = smartTransactionService.processFreeText(rawText, userDetails.getId());
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 }

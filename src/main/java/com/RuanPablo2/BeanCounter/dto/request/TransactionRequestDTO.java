@@ -25,6 +25,8 @@ public class TransactionRequestDTO {
     @NotNull(message = "Type is required")
     TransactionType type;
 
+    private String category;
+
     public TransactionRequestDTO() {
     }
 
@@ -62,5 +64,13 @@ public class TransactionRequestDTO {
 
     public void setType(@NotNull(message = "Type is required") TransactionType type) {
         this.type = type;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 }
