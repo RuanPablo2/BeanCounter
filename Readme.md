@@ -1,74 +1,131 @@
-# 📊 Bean Counter (Financial Dashboard) - Front-end (Angular)
+# 🚀 BeanCounter API
 
-![Angular](https://img.shields.io/badge/Angular-DD0031?style=flat&logo=angular&logoColor=white)
-![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=flat&logo=typescript&logoColor=white)
-![Angular Material](https://img.shields.io/badge/Material-FF4081?style=flat&logo=angular&logoColor=white)
-![SCSS](https://img.shields.io/badge/SCSS-CC6699?style=flat&logo=sass&logoColor=white)
-![Google Gemini](https://img.shields.io/badge/AI_Powered-Google_Gemini-8E75B2?style=flat&logo=google&logoColor=white)
-![Netlify](https://img.shields.io/badge/Deployed_on-Netlify-00C7B7?style=flat&logo=netlify&logoColor=white)
+![Java](https://img.shields.io/badge/Java-17-blue) ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.x-brightgreen) ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-%234169E1) ![Docker](https://img.shields.io/badge/Docker-Oci-2496ED) ![Google Gemini](https://img.shields.io/badge/AI_Powered-Google_Gemini-8E75B2)
 
-🚀 **Live Demo:** [Acesse a aplicação em produção aqui](https://beancounter-iota.vercel.app)
+API REST para gerenciamento de finanças pessoais, focada em segurança, isolamento de dados (Tenant Isolation) e processamento de linguagem natural (NLP). O projeto permite que usuários registrem receitas e despesas manualmente ou através de uma Inteligência Artificial, e acompanhem seus saldos através de um dashboard dinâmico. 
 
-## 💻 Sobre o Projeto
-Esta é a interface de usuário (SPA - Single Page Application) de um sistema de gestão financeira pessoal. Focado em usabilidade e performance, o painel oferece aos usuários uma visão clara de suas finanças, permitindo o gerenciamento completo de receitas e despesas por inserção manual ou **via Inteligência Artificial**.
+## 📐 Tecnologias Utilizadas
 
-**Nota de Arquitetura:** Este projeto consome uma API RESTful desenvolvida em **Java com Spring Boot**. O código-fonte do back-end pode ser encontrado no repositório dedicado da API.
+- **Spring Boot 3** (Web, Security, Data JPA, Validation)
+- **Spring RestClient** (Integração assíncrona HTTP/JSON)
+- **Google Gemini API** (Inteligência Artificial generativa via `gemini-3-flash-preview`)
+- **Spring Security + JWT** (Autenticação Stateless e Autorização)
+- **Springdoc OpenAPI (Swagger)** (Documentação interativa e testes de API)
+- **Banco de Dados:** PostgreSQL 15
+- **Infraestrutura:** Oracle Cloud Infrastructure (OCI) com Docker & Docker Compose
 
-## ✨ Destaques Técnicos do Front-end
-Este projeto foi construído utilizando as melhores práticas do ecossistema Angular moderno:
-* **Inteligência Artificial (NLP) via Google Gemini:** Entrada inteligente de dados. O usuário relata um gasto ou ganho em linguagem natural (ex: *"Gastei 50 reais de Uber ontem"*). O sistema processa o texto, calcula datas relativas, categoriza o gasto, salva no banco e retorna um feedback amigável via `MatSnackBar`.
-* **Filtros Dinâmicos e Inteligentes (Client-side):** 
-  * Filtro Rápido com `MatChips` gerados automaticamente em tempo real com base nas categorias extraídas dos dados exibidos.
-  * Busca instantânea na tabela usando `MatTableDataSource` (sem requisições extras ao back-end).
-  * Filtro por período de datas através do `MatDateRangePicker`.
-* **Autenticação e Segurança:** Fluxo completo de Login e Registro de usuários, com proteção de rotas (Route Guards) e gerenciamento de sessão com Token JWT interceptado dinamicamente nas requisições.
-* **Arquitetura Standalone:** Utilização nativa de Standalone Components no Angular 18, dispensando o uso de `NgModules` para um código mais limpo, modular e de fácil manutenção.
-* **Theme Management (Dark Mode):** Sistema dinâmico de temas (Claro/Escuro) construído com CSS Variables e SCSS nativo, incluindo persistência da preferência do usuário via `localStorage`.
+## 🚀 Deploy em Produção
 
-## 📸 Screenshots
+A aplicação está hospedada na Oracle Cloud, rodando em contêineres Docker. A raiz da aplicação redireciona automaticamente para a interface do Swagger, facilitando a exploração e o teste dos endpoints.
 
-### 🔐 Autenticação (Login e Registro)
-<img width="889" height="641" alt="1" src="https://github.com/user-attachments/assets/7c2ed21b-749f-42e5-8178-4fd9f810c07a"/>
-<img width="846" height="638" alt="2" src="https://github.com/user-attachments/assets/6d42152b-fdc0-4e53-a229-4ff54fdf59df"/>
+> **URL da API (Swagger):** [https://beancounter-ruanpablo2.duckdns.org/](https://beancounter-ruanpablo2.duckdns.org/)
 
-### 🤖 Entrada via IA & Filtros Dinâmicos
-<img width="975" height="641" alt="4" src="https://github.com/user-attachments/assets/afd522e9-fd17-41c5-adca-0e3959b0d6cc"/>
+## ⚙️ Arquitetura e Organização do Projeto
 
-### ☀️ Dashboard - Light Mode
-<img width="994" height="639" alt="3" src="https://github.com/user-attachments/assets/5c3e8789-939d-4878-af0c-289e74f38e91"/>
+A aplicação segue uma estrutura modular e limpa:
 
-### 🌙 Dashboard - Dark Mode
-<img width="973" height="640" alt="dark mode" src="https://github.com/user-attachments/assets/90c507f0-4455-402e-88f7-1c49167cecb9"/>
+```text
+📦 beancounter
+ ┣ 📂 config        # Configurações do Spring Security, JWT, CORS e Swagger
+ ┣ 📂 controller    # Endpoints REST da API e redirecionamento raiz
+ ┣ 📂 dto           # Data Transfer Objects (Request e Response)
+ ┣ 📂 exception     # Exceções personalizadas (GlobalExceptionHandler)
+ ┣ 📂 model         # Entidades do banco de dados (User, Transaction)
+ ┣ 📂 repository    # Interfaces do Spring Data JPA
+ ┣ 📂 security      # Filtros JWT e UserDetails
+ ┣ 📂 services      # Regras de negócio, NLP via Gemini e validações
+ ┣ 📜 application-prod.properties  # Configurações de produção
+```
 
-### ⚙️ Filtros
-<img width="979" height="607" alt="6" src="https://github.com/user-attachments/assets/c664b4e3-fa45-4078-9917-929f98553576"/>
+## 🛠 Funcionalidades Implementadas
 
+### 🤖 Smart Transactions (Integração IA)
+- Inserção de gastos por linguagem natural (Ex: *"Gastei 50 reais no Uber hoje"*).
+- Extração automatizada de `description`, `amount`, `type` e `category`.
+- Cálculo dinâmico de datas relativas com base no timezone (`America/Sao_Paulo`).
 
-## 🛠️ Stack Tecnológica
-* **Framework:** Angular 18 (Standalone Components)
-* **Linguagem:** TypeScript
-* **Estilização:** SCSS (Sass)
-* **Biblioteca de UI:** Angular Material
-* **Integração Externa:** Google Gemini API (via Back-end)
-* **Gerenciamento de Estado:** RxJS
-* **Deploy/CI-CD:** Netlify
+### 🔐 Autenticação e Segurança
+- Login e registro de usuários.
+- Geração e validação de Tokens JWT com expiração temporal.
+- Isolamento total de dados: um usuário não consegue acessar ou manipular dados de outro (Tenant Isolation).
 
-## 🚀 Como executar o projeto localmente
+### 💰 Gestão de Transações
+- Cadastro manual de transações (Receitas e Despesas).
+- Listagem dinâmica baseada em `startDate` e `endDate`.
+- Edição e exclusão seguras com validação rigorosa de propriedade da entidade no banco.
+
+### 📊 Dashboard Financeiro
+- Resumo consolidado do período (Total de Entradas, Total de Saídas e Saldo Atual).
+- Agregação e cálculos de fallback executados nativamente.
+
+## 🔗 Endpoints Principais
+
+### 🔐 Autenticação
+- `POST /auth/register` → Criação de nova conta
+- `POST /auth/login` → Autenticação e retorno do Bearer Token JWT
+
+### 📦 Transações
+- `POST /transactions/smart` → **[NOVO]** Processa texto em linguagem natural via IA e cria a transação estruturada
+- `POST /transactions` → Criar uma nova transação manual
+- `GET /transactions?startDate=YYYY-MM-DD&endDate=YYYY-MM-DD` → Listar transações no período
+- `PUT /transactions/{id}` → Atualizar dados de uma transação
+- `DELETE /transactions/{id}` → Deletar uma transação
+
+### 📊 Dashboard
+- `GET /dashboard?startDate=YYYY-MM-DD&endDate=YYYY-MM-DD` → Retorna o balanço financeiro do período selecionado
+
+---
+
+# 📘 Documentação Técnica
+
+## 🛠 Tratamento de Exceções Global
+
+Para evitar o vazamento de stack traces e padronizar o consumo pelo Front-end, o sistema utiliza um `@RestControllerAdvice`. Qualquer erro na API é formatado em um JSON limpo, com códigos internos de erro.
+
+### 📌 Principais Exceções Tratadas:
+
+| Exceção                   | Status HTTP | Código Interno             | Descrição                                                           |
+| ------------------------- | ----------- | -------------------------- | ------------------------------------------------------------------- |
+| `BusinessException`       | 400         | `AUTH_001`, `TRANS_001`    | Regras de negócio (ex: E-mail já em uso).                           |
+| `BadCredentialsException` | 401         | `AUTH_INVALID_CREDENTIALS` | Senha ou e-mail incorretos no login.                                |
+| `SecurityException`       | 403         | `SECURITY_ERR`             | Tentativa de manipular dados de outro usuário.                      |
+| `MethodArgumentNotValid`  | 422         | `VALIDATION_ERR`           | Falha nas anotações `@Valid` (ex: senha curta).                     |
+| `Exception` (Cata-tudo)   | 500         | `INTERNAL_SERVER_ERROR`    | Erros inesperados de servidor, banco de dados ou timeout da IA.     |
+
+## 🚀 Como Rodar o Projeto Localmente
 
 ### Pré-requisitos
-* Node.js (v18 ou superior)
-* Angular CLI (`npm install -g @angular/cli`)
+- Docker e Docker Compose
+- Java 17+
+- Chave de API do Google Gemini (Google AI Studio)
 
-### Instalação e Execução
-```bash
-# Clone este repositório
-git clone [https://github.com/RuanPablo2/BeanCounter-ui](https://github.com/RuanPablo2/BeanCounter-ui)
+### Passos
 
-# Acesse a pasta do projeto
-cd BeanCounter-ui
+1. Clone o repositório:
+   ```bash
+   git clone [https://github.com/RuanPablo2/BeanCounter.git](https://github.com/RuanPablo2/BeanCounter.git)
+   cd BeanCounter
+   ```
 
-# Instale as dependências
-npm install
+2. Configure as variáveis de ambiente:
+   Crie um arquivo `application-dev.properties` ou injete a seguinte variável com a sua chave da IA:
+   ```properties
+   gemini.api.key=SUA_CHAVE_AQUI
+   ```
 
-# Inicie o servidor local
-ng serve
+3. Suba a infraestrutura do Banco de Dados (PostgreSQL):
+   ```bash
+   docker-compose up -d
+   ```
+
+4. Compile e rode a API localmente:
+   ```bash
+   ./mvnw spring-boot:run
+   ```
+
+5. Acesse a documentação interativa:
+   Abra o navegador em `http://localhost:8080/` para ser redirecionado para o **Swagger UI**.
+
+## 👨‍💻 Autor
+
+Desenvolvido por Ruan Pablo (https://github.com/RuanPablo2). Feedbacks e contribuições são bem-vindos!
