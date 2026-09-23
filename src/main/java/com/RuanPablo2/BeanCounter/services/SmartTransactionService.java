@@ -11,6 +11,7 @@ import org.springframework.web.client.RestClient;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Map;
 
 @Service
@@ -29,21 +30,27 @@ public class SmartTransactionService {
         this.restClient = RestClient.create();
     }
 
-    public record AiParsedData(String description, BigDecimal amount, TransactionType type, String category, String friendlyMessage) {}
+    public record AiParsedData(String description, BigDecimal amount, TransactionType type, String category, String date, String friendlyMessage) {}
     public record SmartTransactionResponse(TransactionResponseDTO transaction, String message) {}
 
     public SmartTransactionResponse processFreeText(String rawText, Long userId) {
+
+        LocalDate dataAtualBrasil = LocalDate.now(ZoneId.of("America/Sao_Paulo"));
+
         String prompt = """
             You are a smart financial assistant. Parse the following user input and extract the transaction details.
+            Today's date is %s. If the user mentions relative dates like "ontem", "hoje", or "semana passada", calculate the correct date based on today.
+            
             Return ONLY a valid JSON, without markdown blocks. Exact keys required:
             - "description": (String) Clean, format, and capitalize the name of the establishment/income (e.g., "McDonald's", "Uber").
             - "amount": (Number) The absolute monetary value.
             - "type": (String) strictly "EXPENSE" or "INCOME".
             - "category": (String) A short category name in Portuguese (e.g., "Alimentação", "Transporte", "Lazer").
+            - "date": (String) The exact or calculated date in "YYYY-MM-DD" format.
             - "friendlyMessage": (String) A short, friendly confirmation message IN PORTUGUESE (e.g., "Gasto de R$ 50,67 no Uber registrado com sucesso!").
             
             User input: "%s"
-            """.formatted(rawText);
+            """.formatted(dataAtualBrasil.toString(), rawText);
 
         var payload = Map.of("contents", new Object[]{
                 Map.of("parts", new Object[]{
@@ -66,7 +73,6 @@ public class SmartTransactionService {
                     .path("text").asText();
 
             String cleanJson = aiText.replace("```json", "").replace("```", "").trim();
-
             AiParsedData parsedData = objectMapper.readValue(cleanJson, AiParsedData.class);
 
             TransactionRequestDTO requestDTO = new TransactionRequestDTO();
@@ -74,7 +80,8 @@ public class SmartTransactionService {
             requestDTO.setAmount(parsedData.amount());
             requestDTO.setType(parsedData.type());
             requestDTO.setCategory(parsedData.category());
-            requestDTO.setDate(LocalDate.now());
+
+            requestDTO.setDate(LocalDate.parse(parsedData.date()));
 
             TransactionResponseDTO savedTransaction = transactionService.create(requestDTO, userId);
 
