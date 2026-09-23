@@ -28,20 +28,20 @@ Este projeto foi construído utilizando as melhores práticas do ecossistema Ang
 ## 📸 Screenshots
 
 ### 🔐 Autenticação (Login e Registro)
-<img width="553" height="542" alt="image" src="<img width="889" height="641" alt="1" src="https://github.com/user-attachments/assets/7c2ed21b-749f-42e5-8178-4fd9f810c07a" />" />
-<img width="547" height="622" alt="image" src="<img width="846" height="638" alt="2" src="https://github.com/user-attachments/assets/6d42152b-fdc0-4e53-a229-4ff54fdf59df" />" />
+<img width="889" height="641" alt="1" src="https://github.com/user-attachments/assets/7c2ed21b-749f-42e5-8178-4fd9f810c07a"/>
+<img width="846" height="638" alt="2" src="https://github.com/user-attachments/assets/6d42152b-fdc0-4e53-a229-4ff54fdf59df"/>
 
 ### 🤖 Entrada via IA & Filtros Dinâmicos
-<img width="975" height="641" alt="4" src="https://github.com/user-attachments/assets/afd522e9-fd17-41c5-adca-0e3959b0d6cc" />
+<img width="975" height="641" alt="4" src="https://github.com/user-attachments/assets/afd522e9-fd17-41c5-adca-0e3959b0d6cc"/>
 
 ### ☀️ Dashboard - Light Mode
-<img width="994" height="639" alt="3" src="https://github.com/user-attachments/assets/5c3e8789-939d-4878-af0c-289e74f38e91" />
+<img width="994" height="639" alt="3" src="https://github.com/user-attachments/assets/5c3e8789-939d-4878-af0c-289e74f38e91"/>
 
 ### 🌙 Dashboard - Dark Mode
-<img width="973" height="640" alt="dark mode" src="https://github.com/user-attachments/assets/90c507f0-4455-402e-88f7-1c49167cecb9" />
+<img width="973" height="640" alt="dark mode" src="https://github.com/user-attachments/assets/90c507f0-4455-402e-88f7-1c49167cecb9"/>
 
 ### ⚙️ Filtros
-<img width="979" height="607" alt="6" src="https://github.com/user-attachments/assets/c664b4e3-fa45-4078-9917-929f98553576" />
+<img width="979" height="607" alt="6" src="https://github.com/user-attachments/assets/c664b4e3-fa45-4078-9917-929f98553576"/>
 
 
 ## 🛠️ Stack Tecnológica
